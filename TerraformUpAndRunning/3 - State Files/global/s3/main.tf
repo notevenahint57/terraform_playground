@@ -1,21 +1,21 @@
+terraform {
+  required_version = ">= 0.8, < 0.9"
+}
+
 provider "aws" {
 	region = "us-east-1"
 }
 
-output "s3_bucket_arn" {
-	value = "${aws_s3_bucket.terraform_state.arn}"
-}
-
 resource "aws_s3_bucket" "terraform_state" {
-	bucket = "khines-terraform-up-and-running-state"
+  bucket = "${var.bucket_name}"
 
 	versioning {
 		enabled = true
 	}
 
-	/* lifecycle {
+	lifecycle {
 		prevent_destroy = true
-	} */
+	}
 
 	tags {
 		BU = "it"
